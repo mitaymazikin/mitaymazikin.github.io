@@ -19,7 +19,7 @@
 
   <!-- Optional JavaScript -->
 
-  <title>Отправка заполненной формы</title>
+  <title>Отправка заполненной формы| Проверка Работы git</title>
 </head>
 <body>
   <div class="container">

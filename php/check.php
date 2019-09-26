@@ -20,12 +20,12 @@ var_dump($_FILES);
     $errors = array();
 
     //Сообщение на почту
-    $msgEmail = nl2br('Данные сообщения:\r\n', false);//r n указан не правильно
-    $msgEmail .= nl2br('Имя: \r\n' . $fio, false);
-    $msgEmail .= nl2br('Email: \r\n' . $email, false);
-    $msgEmail .= nl2br('Телефон: \r\n' . $phone, false);
-    $msgEmail .= nl2br('Дата: \r\n' . $date, false);
-    $msgEmail .= nl2br('Количество: \r\n' . $range, false);
+    $msgEmail = nl2br("Данные сообщения:\r\n", false);//r n указан не правильно
+    $msgEmail .= nl2br("Имя: \r\n" . $fio, false);
+    $msgEmail .= nl2br("Email: \r\n" . $email, false);
+    $msgEmail .= nl2br("Телефон: \r\n" . $phone, false);
+    $msgEmail .= nl2br("Дата: \r\n" . $date, false);
+    $msgEmail .= nl2br("Количество: \r\n" . $range, false);
    
     //проверка полей на валидацию
     if (htmlspecialchars($fio) == ''){

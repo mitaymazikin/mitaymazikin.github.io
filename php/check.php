@@ -11,7 +11,6 @@ function getCaptcha($SecretKey) {
     }
 
 if ($_POST) {
-var_dump($_FILES);
     $fio = $_POST['fio'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
@@ -20,7 +19,7 @@ var_dump($_FILES);
     $errors = array();
 
     //Сообщение на почту
-    $msgEmail = nl2br("Данные сообщения:\r\n", false);//r n указан не правильно
+    $msgEmail = nl2br("Данные сообщения:\r\n", false);
     $msgEmail .= nl2br("Имя: \r\n" . $fio, false);
     $msgEmail .= nl2br("Email: \r\n" . $email, false);
     $msgEmail .= nl2br("Телефон: \r\n" . $phone, false);

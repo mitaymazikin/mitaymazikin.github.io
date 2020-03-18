@@ -1,11 +1,4 @@
 <?php
-//Сообщение на почту
-$msgEmail = "Данные сообщения:\r\n";
-$msgEmail .= "Email: \r\n";
-$msgEmail .= "Телефон: \r\n";
-$msgEmail .= "Дата: \r\n";
-$msgEmail .= "Количество: \r\n";
-
 $fio = htmlspecialchars($_POST['fio']);
 $phone = htmlspecialchars($_POST['phone']);
 $email = htmlspecialchars($_POST['email']);
@@ -37,9 +30,27 @@ if ($_POST) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
         }
     }
-    if ($range < 20 || $range > 80) {
+    if ($range === '') {
+        $errors[] = 'Количество не выбрано';
+    }elseif ($range < 20 || $range > 80) {
         $errors[] = 'Число от 20 до 80';
     }
+
+
+
+}elseif (count($errors) === 0) {
+    $servarName = 'localhost';
+    $dbName = 'save_form_test';
+    $userName = 'root';
+    $passUser = '2891957donald';
+
+
+    //Сообщение на почту
+    $msgEmail = "Данные сообщения:\r\n";
+    $msgEmail .= "Email: \r\n";
+    $msgEmail .= "Телефон: \r\n";
+    $msgEmail .= "Дата: \r\n";
+    $msgEmail .= "Количество: \r\n";
 }
 
 

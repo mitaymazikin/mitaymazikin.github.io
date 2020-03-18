@@ -39,7 +39,6 @@
             </div>
             <div class="form-group">
                 <label>Загрузите файл:</label>
-                <!-- <input type="hidden" name="MAX_FILE_SIZE" value="50000" /> -->
                 <input name="file" type="file" class="form-control-file" id="files">
             </div>
             <div class="form-group row">
@@ -51,9 +50,9 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Количество:</label>
             <div class="col-sm-4">
-                <div id="slider">
-                    <div id="custom-handle" class="ui-slider-handle" name="range"></div>
-                </div>
+                <input type="hidden" name="send-result-polzunok" id="send-result-polzunok" />
+                <div id="polzunok"></div>
+                <span style="color:green" id="result-polzunok"></span>
             </div>
         </div>
             <div class="form-group row">

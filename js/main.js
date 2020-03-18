@@ -7,6 +7,18 @@ $(document).ready(function(){
         firstDay: 1,
     });
 
+    $("#polzunok").slider({
+        animate: "slow",
+        range: "min",
+        value: 0,
+        slide : function(event, ui) {
+            $("#result-polzunok").text(ui.value);
+            $("#send-result-polzunok").val(ui.value);
+            $("#send-result-polzunok").val($("#polzunok").slider("value"));
+        }
+    });
+    $( "#result-polzunok" ).text($( "#polzunok" ).slider( "value" ));
+
     $("#inputPhone").mask("+7 (999) 99-99-999");
 
     //Обработка данных с сервера

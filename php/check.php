@@ -1,39 +1,48 @@
 <?php
+//Сообщение на почту
+$msgEmail = "Данные сообщения:\r\n";
+$msgEmail .= "Email: \r\n";
+$msgEmail .= "Телефон: \r\n";
+$msgEmail .= "Дата: \r\n";
+$msgEmail .= "Количество: \r\n";
+
 $fio = htmlspecialchars($_POST['fio']);
 $phone = htmlspecialchars($_POST['phone']);
 $email = htmlspecialchars($_POST['email']);
 $date = htmlspecialchars($_POST['date']);
-$range = htmlspecialchars($_POST['range']);
+$range = htmlspecialchars($_POST['send-result-polzunok']);
 $errors = array();
 
+if ($_POST) {
+    if ($fio == '') {
+        $errors[] = 'Заполните поле : ФИО';
+    }elseif (!preg_match("/^[a-zа-яё\d]{1}[a-zа-яё\d\s]*[a-zа-яё\d]{1}$/i", $fio)) {
+        $errors[] = 'Поле ФИО не может содержать цифры или знаки';
+    }elseif ((mb_strlen($fio) > 20 || mb_strlen($fio) < 2)) {
+        $errors[] = 'ФИО от 2 - х до 20 символов';
+    }
+    if ($phone == '') {
+        $errors[] = 'Номер телефона пуст';
+    }
+    if (isset($_FILES) && $_FILES['file']['error'] === 0) {
+        $fileTmpPath = $_FILES['file']['tmp_name'];
+        $fileName = $_FILES['file']['name'];
+        $fileSize = $_FILES['file']['size'];
+        $fileType = $_FILES['file']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+        $allowedfileExtensions = array('pdf','doc','docx');
+        if (!in_array($fileExtension, $allowedfileExtensions)) {
+            $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
+        }
+    }
+    if ($range < 20 || $range > 80) {
+        $errors[] = 'Число от 20 до 80';
+    }
+}
 
-//$_FILES
-//$_POST
 
-echo json_encode($_POST);
+echo json_encode($errors);
 
-//Сообщение на почту
-/*   $msgEmail = nl2br("Данные сообщения:\r\n", false);
-   $msgEmail .= nl2br("Email: \r\n" . $email, false);
-   $msgEmail .= nl2br("Телефон: \r\n" . $phone, false);
-   $msgEmail .= nl2br("Дата: \r\n" . $date, false);
-   $msgEmail .= nl2br("Количество: \r\n" . $range, false);*/
-
-//проверка полей на валидацию
-/* if ($fio == '') {
-     $errors[] = 'Заполните поле : ФИО';
- }elseif (!preg_match("/^[a-zа-яё\d]{1}[a-zа-яё\d\s]*[a-zа-яё\d]{1}$/i", $fio)) {
-     $errors[] = 'Поле ФИО не может содержать цифры или знаки';
- }elseif ((mb_strlen($fio) > 20 || mb_strlen($fio) < 2)) {
-     $errors[] = 'Ощибка: ФИО от 2 - х до 20 символов';
- }
- if ($phone == '') {
-     $errors[] = 'Заполните поле : Номер телефона';
- }
- if (count($errors) > 0) {
-     foreach ($errors as $err) {
-         echo  json_encode($err, JSON_UNESCAPED_UNICODE);
-     }
-
- }*/
 ?>

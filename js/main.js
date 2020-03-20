@@ -19,7 +19,7 @@ $(document).ready(function(){
     });
     $( "#result-polzunok" ).text($( "#polzunok" ).slider( "value" ));
 
-    $("#inputPhone").mask("+7 (999) 99-99-999");
+    $("#inputPhone").mask("+7 (999) 999 99 999");
 
     //Обработка данных с сервера
     toForm.onsubmit = async (e) => {

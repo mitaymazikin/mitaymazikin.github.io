@@ -30,11 +30,16 @@ if (!$_POST['check']) {
         if (!in_array($fileExtension, $allowedfileExtensions)) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
         }
+
     }
     if ($range === '') {
         $errors[] = 'Количество не выбрано';
     } elseif ($range < 20 || $range > 80) {
         $errors[] = 'Количество: от 20 до 80';
+    }
+    if ($date != '') {
+        $transferDate = strtotime($date);
+        $returnDate = date("Y-m-d", $transferDate);
     }
     if (count($errors) === 0){
         $servarName = 'localhost';
@@ -48,9 +53,9 @@ if (!$_POST['check']) {
             mysqli_set_charset($conn, "utf8");
         }
 
-        $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$file','$date','$range' )";
+        $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$file','$returnDate','$range' )";
         if (mysqli_query($conn, $sql)) {
-            $errors[] = "Запись сделана";
+           // $errors[] = "Запись сделана"; 
         } else {
             $errors[] = "Ошибка: " . mysqli_error($conn);
         }

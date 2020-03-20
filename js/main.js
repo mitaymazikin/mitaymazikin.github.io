@@ -32,6 +32,15 @@ $(document).ready(function(){
 
         let result = await response.json();
 
+        if (result.length > 0) {
+            result.forEach(function(item,i,result) {
+                document.getElementById("errors").innerHTML = item;
+            });
+        }else {
+            document.getElementById("toForm").style = 'display: none;';
+            document.getElementById("success").innerHTML = 'Спасибо! Данные успешно отправлены.';
+        }
+
         console.log(result);
     };
     //Конец обработки данных

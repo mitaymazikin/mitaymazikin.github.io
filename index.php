@@ -17,7 +17,7 @@
 
         <form id="toForm" method="POST" name="check" enctype="multipart/form-data">
             <h1 class="col-sm-12 text-center">Заполните форму, пожалуйста!</h1>
-            <div class="errors"></div>
+            <div id="errors"></div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Введите ФИО:</label>
                 <div class="col-sm-4">
@@ -62,6 +62,7 @@
                 </div>
             </div>
         </form>
+        <div id="success"></div>
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>

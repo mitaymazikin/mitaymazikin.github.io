@@ -34,7 +34,7 @@ if (!$_POST['check']) {
     if ($range === '') {
         $errors[] = 'Количество не выбрано';
     } elseif ($range < 20 || $range > 80) {
-        $errors[] = 'Число от 20 до 80';
+        $errors[] = 'Количество: от 20 до 80';
     }
     if (count($errors) === 0){
         $servarName = 'localhost';
@@ -43,14 +43,16 @@ if (!$_POST['check']) {
         $passUser   = '2899157donald';
         $conn       = mysqli_connect($servarName, $userName, $passUser, $dbName);
         if (!$conn) {
-            $errors[] = ("Connection failed: " . mysqli_connect_error());
+            $errors[] = ("Ошибка подключения к базе: " . mysqli_connect_error());
+        }else {
+            mysqli_set_charset($conn, "utf8");
         }
 
-        $sql = "INSERT INTO save_form (name, phone, email,file,date,range) VALUES ($fio,$phone,$email,$file,$date,$range )";
+        $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$file','$date','$range' )";
         if (mysqli_query($conn, $sql)) {
-            $errors[] = "New record created successfully";
+            $errors[] = "Запись сделана";
         } else {
-            $errors[] = "Error: " . $sql . "<br>" . mysqli_error($conn);
+            $errors[] = "Ошибка: " . mysqli_error($conn);
         }
         mysqli_close($conn);
 

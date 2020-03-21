@@ -32,6 +32,11 @@ $(document).ready(function(){
 
         let result = await response.json();
 
+        /*for (let value of Object.entries(result)) {
+            console.log(value);
+
+        }*/
+
         if (result.length > 0) {
             result.forEach(function(item,i,result) {
                 document.getElementById("errors").innerHTML = item;
@@ -40,8 +45,6 @@ $(document).ready(function(){
             document.getElementById("toForm").style = 'display: none;';
             document.getElementById("success").innerHTML = 'Спасибо! Данные успешно отправлены.';
         }
-
-        console.log(result);
     };
     //Конец обработки данных
 });

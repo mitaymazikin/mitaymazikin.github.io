@@ -22,7 +22,7 @@ $(document).ready(function(){
     $("#inputPhone").mask("+7 (999) 999 99 999");
 
     //Обработка данных с сервера
-    toForm.onsubmit = async (e) => {
+toForm.onsubmit = async (e) => {
         e.preventDefault();
 
         let response = await fetch('/php/check.php', {
@@ -32,19 +32,17 @@ $(document).ready(function(){
 
         let result = await response.json();
 
-        /*for (let value of Object.entries(result)) {
-            console.log(value);
-
-        }*/
-
         if (result.length > 0) {
-            result.forEach(function(item,i,result) {
-                document.getElementById("errors").innerHTML = item;
+            result.forEach(function(item) {
+                let  errors = document.getElementById("errors").innerHTML += item + "</br>";
+
+                console.log(item)
             });
         }else {
             document.getElementById("toForm").style = 'display: none;';
             document.getElementById("success").innerHTML = 'Спасибо! Данные успешно отправлены.';
         }
+
     };
     //Конец обработки данных
 });

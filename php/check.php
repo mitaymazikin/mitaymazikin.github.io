@@ -10,9 +10,10 @@ $errors = array();
 if (!$_POST['check']) {
     if ($fio === '') {
         $errors[] = 'Заполните поле : ФИО';
-    } elseif (!preg_match("/^[a-zа-яё\d]{1}[a-zа-яё\d\s]*[a-zа-яё\d]{1}$/i", $fio)) {
-        $errors[] = 'Поле ФИО не может содержать цифры или знаки';
-    } elseif ((mb_strlen($fio) > 20 || mb_strlen($fio) < 2)) {
+    }
+    if (!preg_match("/^[a-zа-яё\d]{1}[a-zа-яё\d\s]*[a-zа-яё\d]{1}$/i", $fio)) {
+        $errors[] = 'ФИО должен содержать буквы';
+    }elseif ((mb_strlen($fio) > 20 && mb_strlen($fio) < 2)) {
         $errors[] = 'ФИО от 2 - х до 20 символов';
     }
     if ($phone === '') {
@@ -41,7 +42,7 @@ if (!$_POST['check']) {
         $transferDate = strtotime($date);
         $returnDate = date("Y-m-d", $transferDate);
     }
-    if (count($errors) === 1){
+    if (count($errors) === 0){
         $servarName = 'localhost';
         $dbName     = 'save_form_test';
         $userName   = 'root';
@@ -77,11 +78,8 @@ if (!$_POST['check']) {
             $errors[] = 'письмо не отправилось';
         }
     }
+        echo json_encode($errors);
 }
 
-echo json_encode(array(
-    'errors' => $errors,
-    'file'=> $fileTmpPath
-                 ));
 
 ?>

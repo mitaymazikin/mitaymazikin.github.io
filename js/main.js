@@ -22,7 +22,35 @@ $(document).ready(function(){
     $("#inputPhone").mask("+7 (999) 999 99 999");
 
     //Обработка данных с сервера
-toForm.onsubmit = async (e) => {
+    $("#toForm").on('click',function(e){
+            let dataCallback = $(this).serialize();
+            let action ='/php/check.php';
+            let errors = $("#errors");
+            let success = $("#success");
+            if (dataCallback && action) {
+                $.ajax({
+                    type: "POST",
+                    url: action,
+                    data: dataCallback,
+                    contentType: 'application/json',
+                    success: function(out){
+                        out = JSON.parse(out);
+                        if ( out.length > 0) {
+                           $.each(out, function (index,value){
+                               errors.html( value );
+                               return false;
+                           });
+                        }else{
+                            $("#toForm").hide();
+                            success.html('Спасибо! форма успешно отправлена');
+                        }
+
+                    }
+                });
+            };
+            return false;
+});
+/*toForm.onsubmit = async (e) => {
         e.preventDefault();
 
         let response = await fetch('/php/check.php', {
@@ -31,7 +59,7 @@ toForm.onsubmit = async (e) => {
         });
 
         let result = await response.json();
-
+    console.log(result)
         if (result.length > 0) {
             result.forEach(function(item) {
                 let  errors = document.getElementById("errors").innerHTML += item + "</br>";
@@ -43,6 +71,6 @@ toForm.onsubmit = async (e) => {
             document.getElementById("success").innerHTML = 'Спасибо! Данные успешно отправлены.';
         }
 
-    };
+    };*/
     //Конец обработки данных
 });

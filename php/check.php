@@ -65,6 +65,7 @@ if (!$_POST['check']) {
         $themeMail = 'Тренинг-форма';
         //Сообщение на почту
         $msgEmail = "Данные сообщения:\r\n";
+        $msgEmail .= "ФИО:" . $fio . " \r\n";
         $msgEmail .= "Email:" . $email . " \r\n";
         $msgEmail .= "Телефон:" . $phone .  "\r\n";
         $msgEmail .= "Дата:" . $returnDate . " \r\n";
@@ -78,7 +79,8 @@ if (!$_POST['check']) {
             $errors[] = 'письмо не отправилось';
         }
     }
-        echo json_encode($errors);
+    echo json_encode($errors);
+
 }
 
 

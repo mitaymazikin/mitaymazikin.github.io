@@ -6,15 +6,15 @@ $date   = htmlspecialchars($_POST['date']);
 $file   = $_FILES['file'];
 $range  = htmlspecialchars($_POST['send-result-polzunok']);
 $errors = array();
+$pregMatchFio = preg_match("/^[a-zA-Zа-яА-Я]+$/", $fio);
 
 if (!$_POST['check']) {
     if ($fio === '') {
         $errors[] = 'Заполните поле : ФИО';
-    }
-    if (!preg_match("/^[a-zа-яё\d]{1}[a-zа-яё\d\s]*[a-zа-яё\d]{1}$/i", $fio)) {
-        $errors[] = 'ФИО должен содержать буквы';
-    }elseif ((mb_strlen($fio) > 20 && mb_strlen($fio) < 2)) {
-        $errors[] = 'ФИО от 2 - х до 20 символов';
+    }elseif (!$pregMatchFio) {
+        $errors[] = "Введите русские или английские буквы";
+    }elseif ( strlen($fio) < 2 || strlen($fio) > 20) {
+        $errors[] = 'Кол-во символов от 2 до 20';
     }
     if ($phone === '') {
         $errors[] = 'Номер телефона пуст';
@@ -42,7 +42,7 @@ if (!$_POST['check']) {
         $transferDate = strtotime($date);
         $returnDate = date("Y-m-d", $transferDate);
     }
-    if (count($errors) === 0){
+    if (count($errors) < 0){
         $servarName = 'localhost';
         $dbName     = 'save_form_test';
         $userName   = 'root';
@@ -56,12 +56,13 @@ if (!$_POST['check']) {
 
         $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$file','$returnDate','$range' )";
         if (mysqli_query($conn, $sql)) {
-           // $errors[] = "Запись сделана";
+            $errors[] = "Запись сделана";
         } else {
             $errors[] = "Ошибка: " . mysqli_error($conn);
         }
         mysqli_close($conn);
         $to = 'mityamazikin@gmail.com';
+        $from = 'training@dmitry.ru';
         $themeMail = 'Тренинг-форма';
         //Сообщение на почту
         $msgEmail = "Данные сообщения:\r\n";
@@ -71,7 +72,7 @@ if (!$_POST['check']) {
         $msgEmail .= "Дата:" . $returnDate . " \r\n";
         $msgEmail .= "Количество:" . $range .  "\r\n";
 
-        $mailSend = mail($to, $themeMail , $msgEmail);
+        $mailSend = mail($to, $themeMail , $msgEmail,$from);
 
         if ( $mailSend === true) {
             $mailSend;
@@ -79,9 +80,7 @@ if (!$_POST['check']) {
             $errors[] = 'письмо не отправилось';
         }
     }
-    echo json_encode($errors);
-
 }
-
+echo json_encode($errors);
 
 ?>

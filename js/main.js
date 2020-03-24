@@ -22,23 +22,24 @@ $(document).ready(function(){
     $("#inputPhone").mask("+7 (999) 999 99 999");
 
     //Обработка данных с сервера
-    $("#toForm").on('click',function(e){
+    $("#toForm").submit(function(e){
             let dataCallback = $(this).serialize();
             let action ='/php/check.php';
             let errors = $("#errors");
             let success = $("#success");
-            if (dataCallback && action) {
                 $.ajax({
                     type: "POST",
                     url: action,
                     data: dataCallback,
-                    contentType: 'application/json',
+                    async: false,
                     success: function(out){
                         out = JSON.parse(out);
+                        console.log(out);
+                        let str = '';
                         if ( out.length > 0) {
                            $.each(out, function (index,value){
-                               errors.html( value );
-                               return false;
+                               errors.html(str += value +'<br>');
+                               console.log(value);
                            });
                         }else{
                             $("#toForm").hide();
@@ -47,7 +48,6 @@ $(document).ready(function(){
 
                     }
                 });
-            };
             return false;
 });
 /*toForm.onsubmit = async (e) => {

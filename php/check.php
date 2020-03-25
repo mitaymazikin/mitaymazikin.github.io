@@ -6,13 +6,10 @@ $date   = htmlspecialchars($_POST['date']);
 $file   = $_FILES['file'];
 $range  = htmlspecialchars($_POST['send-result-polzunok']);
 $errors = array();
-$pregMatchFio = preg_match("/^[a-zA-Zа-яА-Я]+$/", $fio);
 
 if (!$_POST['check']) {
     if ($fio === '') {
         $errors[] = 'Заполните поле : ФИО';
-    }elseif (!$pregMatchFio) {
-        $errors[] = "Введите русские или английские буквы";
     }elseif ( strlen($fio) < 2 || strlen($fio) > 20) {
         $errors[] = 'Кол-во символов от 2 до 20';
     }
@@ -28,10 +25,19 @@ if (!$_POST['check']) {
         $fileExtension         = strtolower(end($fileNameCmps));
         $newFileName           = md5(time() . $fileName) . '.' . $fileExtension;
         $allowedfileExtensions = array('pdf', 'doc', 'docx');
+
+        $fileLoadDir = '/home/user/publick.html/mzbrand/toForm/tmp/' . $newFileName ;
+
         if (!in_array($fileExtension, $allowedfileExtensions)) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
         }
-        move_uploaded_file($fileTmpPath, 'tmp/' . $fileName);
+        if (is_uploaded_file($fileTmpPath) === true) {
+           move_uploaded_file($fileTmpPath, "$fileLoadDir" );
+           $errors[] = $newFileName;
+        }else{
+            $errors[] = 'ошибка загрузки';
+        }
+
     }
     if ($range === '') {
         $errors[] = 'Количество не выбрано';
@@ -43,11 +49,11 @@ if (!$_POST['check']) {
         $returnDate = date("Y-m-d", $transferDate);
     }
     if (count($errors) < 0){
-        $servarName = 'localhost';
+        $serverName = 'localhost';
         $dbName     = 'save_form_test';
         $userName   = 'root';
         $passUser   = '2899157donald';
-        $conn       = mysqli_connect($servarName, $userName, $passUser, $dbName);
+        $conn       = mysqli_connect($serverName, $userName, $passUser, $dbName);
         if (!$conn) {
             $errors[] = ("Ошибка подключения к базе: " . mysqli_connect_error());
         }else {

@@ -1,4 +1,7 @@
 <?php
+header('Content-Type: form/multipart');
+set_time_limit(50000);
+
 $fio    = htmlspecialchars($_POST['fio']);
 $phone  = htmlspecialchars($_POST['phone']);
 $email  = htmlspecialchars($_POST['email']);
@@ -31,9 +34,11 @@ if (!$_POST['check']) {
         if (!in_array($fileExtension, $allowedfileExtensions)) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
         }
-        if (is_uploaded_file($fileTmpPath) === true) {
-           move_uploaded_file($fileTmpPath, "$fileLoadDir" );
-           $errors[] = $newFileName;
+        $imgLoad = is_uploaded_file($fileTmpPath);
+        $dirLoadFile = move_uploaded_file($fileTmpPath, "$fileLoadDir" );
+        if ($imgLoad) {
+            $dirLoadFile;
+           $errors[] = $imgLoad;
         }else{
             $errors[] = 'ошибка загрузки';
         }
@@ -48,7 +53,7 @@ if (!$_POST['check']) {
         $transferDate = strtotime($date);
         $returnDate = date("Y-m-d", $transferDate);
     }
-    if (count($errors) < 0){
+    if (count($errors) === 0){
         $serverName = 'localhost';
         $dbName     = 'save_form_test';
         $userName   = 'root';
@@ -60,7 +65,7 @@ if (!$_POST['check']) {
             mysqli_set_charset($conn, "utf8");
         }
 
-        $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$file','$returnDate','$range' )";
+        $sql = "INSERT INTO save_form (name, phone, email,file,date,rage) VALUES ('$fio','$phone','$email','$fileName','$returnDate','$range' )";
         if (mysqli_query($conn, $sql)) {
             $errors[] = "Запись сделана";
         } else {

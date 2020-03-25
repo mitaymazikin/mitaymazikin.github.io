@@ -27,23 +27,31 @@ toForm.onsubmit = async (e) => {
 
         let response = await fetch('/php/check.php', {
             method: 'POST',
-            body:   new FormData(toForm)
+            body:   new FormData(toForm),
         });
 
         let result = await response.json();
         let errors = $("#errors");
         let success = $("#success");
 
+        result.timeout = 120000;
+    console.log(response.headers.get('Content-Type'));
+    if (response.ok) {
         if (result.length > 0) {
             let str = '';
-                $.each(result, function (index,value){
-                    errors.html(str += value +'<br>');
-                    console.log(value);
-                });
+            $.each(result, function (index,value){
+                errors.html(str += value +'<br>');
+                console.log(result);
+
+            });
         }else {
             $("#toForm").hide();
             success.html('Спасибо! форма успешно отправлена');
         }
+    }else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+
 
     };
     //Конец обработки данных

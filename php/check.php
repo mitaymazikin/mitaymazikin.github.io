@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: form/multipart');
-set_time_limit(50000);
+set_time_limit(120000);
 
 $fio    = htmlspecialchars($_POST['fio']);
 $phone  = htmlspecialchars($_POST['phone']);
@@ -29,20 +29,16 @@ if (!$_POST['check']) {
         $newFileName           = md5(time() . $fileName) . '.' . $fileExtension;
         $allowedfileExtensions = array('pdf', 'doc', 'docx');
 
-        $fileLoadDir = '/home/user/publick.html/mzbrand/toForm/tmp/' . $newFileName ;
+        $fileLoadDir = $_SERVER['DOCUMENT_ROOT']  .  '/tmp/' ;
 
         if (!in_array($fileExtension, $allowedfileExtensions)) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
         }
-        $imgLoad = is_uploaded_file($fileTmpPath);
-        $dirLoadFile = move_uploaded_file($fileTmpPath, "$fileLoadDir" );
-        if ($imgLoad) {
-            $dirLoadFile;
-           $errors[] = $imgLoad;
+        if (in_array($fileExtension, $allowedfileExtensions)){
+            move_uploaded_file($fileTmpPath, $fileLoadDir .  $newFileName);
         }else{
-            $errors[] = 'ошибка загрузки';
+            $errors[] = 'Не удалось загрузить файл';
         }
-
     }
     if ($range === '') {
         $errors[] = 'Количество не выбрано';

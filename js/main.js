@@ -41,7 +41,7 @@ toForm.onsubmit = async (e) => {
             let str = '';
             $.each(result, function (index,value){
                 errors.html(str += value +'<br>');
-                console.log(result);
+                console.log(index[3]);
 
             });
         }else {

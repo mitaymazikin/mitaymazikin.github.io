@@ -30,15 +30,16 @@ if (!$_POST['check']) {
         $allowedfileExtensions = array('pdf', 'doc', 'docx');
 
         $fileLoadDir = $_SERVER['DOCUMENT_ROOT']  .  '/tmp/' ;
-
+        $int = 1024 * 5 * 1024;
         if (!in_array($fileExtension, $allowedfileExtensions)) {
             $errors[] = 'Допустимый формат файла: .doc, .docx, .pdf';
+            $errors[] = $fileSize;
         }
         if (in_array($fileExtension, $allowedfileExtensions)){
             move_uploaded_file($fileTmpPath, $fileLoadDir .  $newFileName);
-        }else{
-            $errors[] = 'Не удалось загрузить файл';
         }
+    }elseif (  $file['error'] === 1) {
+        $errors[] = 'Файл превышает 5мб';
     }
     if ($range === '') {
         $errors[] = 'Количество не выбрано';

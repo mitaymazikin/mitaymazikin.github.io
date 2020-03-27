@@ -14,7 +14,6 @@
 </head>
 <body>
     <div class="container">
-
         <form id="toForm" method="POST" name="check" enctype="multipart/form-data">
             <h1 class="col-sm-12 text-center">Заполните форму, пожалуйста!</h1>
             <div id="errors"></div>

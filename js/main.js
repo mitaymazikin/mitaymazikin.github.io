@@ -35,14 +35,12 @@ toForm.onsubmit = async (e) => {
         let success = $("#success");
 
         result.timeout = 120000;
-    console.log(response.headers.get('Content-Type'));
+    console.log(result);
     if (response.ok) {
         if (result.length > 0) {
             let str = '';
             $.each(result, function (index,value){
                 errors.html(str += value +'<br>');
-                console.log(index[3]);
-
             });
         }else {
             $("#toForm").hide();

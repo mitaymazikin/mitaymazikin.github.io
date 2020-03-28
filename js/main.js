@@ -19,7 +19,14 @@ $(document).ready(function(){
     });
     $( "#result-polzunok" ).text($( "#polzunok" ).slider( "value" ));
 
-    $("#inputPhone").mask("+7 (999) 999 99 999");
+    $("#inputPhone").mask("+7 (999) 999 99 99");
+
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR', {action: 'homepage'}).then(function(token) {
+            //console.log(token);
+            document.getElementById('g-recaptcha-response').value=token;
+        });
+    });
 
     //Обработка данных с сервера
 toForm.onsubmit = async (e) => {
@@ -35,6 +42,7 @@ toForm.onsubmit = async (e) => {
         let success = $("#success");
 
         result.timeout = 120000;
+        console.log(result);
 
         if (response.ok) {
             if (result.length > 0) {

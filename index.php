@@ -54,6 +54,7 @@
                 <div id="polzunok"></div>
                 <span style="color:green" id="result-polzunok"></span>
             </div>
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
         </div>
             <div class="form-group row">
                 <div class="col-sm-12 ">

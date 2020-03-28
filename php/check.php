@@ -2,6 +2,13 @@
 header('Content-Type: form/multipart');
 set_time_limit(120000);
 
+/*СОЗДАЕМ ФУНКЦИЮ КОТОРАЯ ДЕЛАЕТ ЗАПРОС НА GOOGLE СЕРВИС*/
+function getCaptcha($SecretKey) {
+    $Response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Lf_LOIUAAAAAPjrPAoliPQi218VcvXe3zK6ukEC&response={$SecretKey}");
+    $Return = json_decode($Response);
+    return $Return;
+}
+
 $fio    = htmlspecialchars($_POST['fio']);
 $phone  = htmlspecialchars($_POST['phone']);
 $email  = htmlspecialchars($_POST['email']);
@@ -64,6 +71,19 @@ if (!$_POST['check']) {
         }
     }
     //конец проверки загрузки файла
+
+    //recaptcha v3
+
+    /*ПРОИЗВОДИМ ЗАПРОС НА GOOGLE СЕРВИС И ЗАПИСЫВАЕМ ОТВЕТ*/
+    $Return = getCaptcha($_POST['g-recaptcha-response']);
+
+
+    /*ЕСЛИ ЗАПРОС УДАЧНО ОТПРАВЛЕН И ЗНАЧЕНИЕ score БОЛЬШЕ 0,5 ВЫПОЛНЯЕМ КОД*/
+    if($Return->success == true && $Return->score > 0.5){
+
+    } else {
+        $errors[] =  "Упс! Кажется вы робот";
+    }
 
     //если ошибок нету подключаемся к базе и отправляем на почту данные
     if (count($errors) === 0){

@@ -76,7 +76,7 @@ if (!$_POST['check']) {
 
     /*ПРОИЗВОДИМ ЗАПРОС НА GOOGLE СЕРВИС И ЗАПИСЫВАЕМ ОТВЕТ*/
     $Return = getCaptcha($_POST['g-recaptcha-response']);
-
+    //$errors[] = $Return;
 
     /*ЕСЛИ ЗАПРОС УДАЧНО ОТПРАВЛЕН И ЗНАЧЕНИЕ score БОЛЬШЕ 0,5 ВЫПОЛНЯЕМ КОД*/
     if($Return->success == true && $Return->score > 0.5){

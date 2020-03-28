@@ -35,22 +35,20 @@ toForm.onsubmit = async (e) => {
         let success = $("#success");
 
         result.timeout = 120000;
-    console.log(result);
-    if (response.ok) {
-        if (result.length > 0) {
-            let str = '';
-            $.each(result, function (index,value){
-                errors.html(str += value +'<br>');
-            });
-        }else {
-            $("#toForm").hide();
-            success.html('Спасибо! форма успешно отправлена');
+
+        if (response.ok) {
+            if (result.length > 0) {
+                let str = '';
+                $.each(result, function (index,value){
+                    errors.html(str += value +'<br>');
+                });
+                }else {
+                    $("#toForm").hide();
+                    success.html('Спасибо! Данные успешно отправлена');
+                }
+            }else {
+                alert("Ошибка HTTP: " + response.status);
         }
-    }else {
-        alert("Ошибка HTTP: " + response.status);
-    }
-
-
     };
     //Конец обработки данных
 });

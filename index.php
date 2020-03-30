@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/jquery-ui.css">
     <link rel="stylesheet" href="/css/style.css">
     <!-- Bootstrap CSS-->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <script src='https://www.google.com/recaptcha/api.js?render=6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR'></script>
     <title>Форма обратной связи</title>
 </head>

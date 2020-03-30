@@ -72,19 +72,6 @@ if (!$_POST['check']) {
     }
     //конец проверки загрузки файла
 
-    //recaptcha v3
-
-    /*ПРОИЗВОДИМ ЗАПРОС НА GOOGLE СЕРВИС И ЗАПИСЫВАЕМ ОТВЕТ*/
-    $Return = getCaptcha($_POST['g-recaptcha-response']);
-    //$errors[] = $Return;
-
-    /*ЕСЛИ ЗАПРОС УДАЧНО ОТПРАВЛЕН И ЗНАЧЕНИЕ score БОЛЬШЕ 0,5 ВЫПОЛНЯЕМ КОД*/
-    if($Return->success == true && $Return->score > 0.5){
-
-    } else {
-        $errors[] =  "Упс! Кажется вы робот";
-    }
-
     //если ошибок нету подключаемся к базе и отправляем на почту данные
     if (count($errors) === 0){
         $serverName = 'localhost';
@@ -123,6 +110,18 @@ if (!$_POST['check']) {
             $mailSend;
         }else {
             $errors[] = 'письмо не отправилось';
+        }
+        //recaptcha v3
+
+        /*ПРОИЗВОДИМ ЗАПРОС НА GOOGLE СЕРВИС И ЗАПИСЫВАЕМ ОТВЕТ*/
+        $Return = getCaptcha($_POST['g-recaptcha-response']);
+        $errors[] = $Return;
+
+        /*ЕСЛИ ЗАПРОС УДАЧНО ОТПРАВЛЕН И ЗНАЧЕНИЕ score БОЛЬШЕ 0,5 ВЫПОЛНЯЕМ КОД*/
+        if($Return->success == true && $Return->score > 0.5){
+
+        } else {
+            $errors[] =  "Упс! Кажется вы робот";
         }
     }
 }

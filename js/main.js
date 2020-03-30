@@ -21,12 +21,6 @@ $(document).ready(function(){
 
     $("#inputPhone").mask("+7 (999) 999 99 99");
 
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR', {action: 'homepage'}).then(function(token) {
-            //console.log(token);
-            document.getElementById('g-recaptcha-response').value=token;
-        });
-    });
 
     //Обработка данных с сервера
 toForm.onsubmit = async (e) => {
@@ -45,6 +39,12 @@ toForm.onsubmit = async (e) => {
         console.log(result);
 
         if (response.ok) {
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR', {action: 'homepage'}).then(function(token) {
+                    //console.log(token);
+                    document.getElementById('g-recaptcha-response').value=token;
+                });
+            });
             if (result.length > 0) {
                 let str = '';
                 $.each(result, function (index,value){

@@ -118,7 +118,7 @@ if (!$_POST['check']) {
         //$errors[] = $Return;
 
         /*ЕСЛИ ЗАПРОС УДАЧНО ОТПРАВЛЕН И ЗНАЧЕНИЕ score БОЛЬШЕ 0,5 ВЫПОЛНЯЕМ КОД*/
-        if($Return->success == true && $Return->score > 0.5){
+        if($Return->success === true && $Return->score > 0.5){
 
         } else {
             $errors[] =  "Упс! Кажется вы робот";

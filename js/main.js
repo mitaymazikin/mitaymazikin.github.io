@@ -38,13 +38,15 @@ toForm.onsubmit = async (e) => {
         result.timeout = 120000;
         console.log(result);
 
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR', {action: 'homepage'}).then(function(token) {
+            //console.log(token);
+            document.getElementById('g-recaptcha-response').value=token;
+        });
+    });
+
         if (response.ok) {
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Lf_LOIUAAAAALGzJItq9XRKUBYV6Eh56TUCwauR', {action: 'homepage'}).then(function(token) {
-                    //console.log(token);
-                    document.getElementById('g-recaptcha-response').value=token;
-                });
-            });
+
             if (result.length > 0) {
                 let str = '';
                 $.each(result, function (index,value){
